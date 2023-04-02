@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Main/main.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Configuration</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="POST" action="{{ url_for('config') }}">
+        <h3>System Info</h3>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Version:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="version" value="{{ config['SYSTEM_INFO']['version'] }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">BA:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="BA" value="{{ config['SYSTEM_INFO']['BA'] }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">MASCHINE:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="MASCHINE" value="{{ config['SYSTEM_INFO']['MASCHINE'] }}">
+            </div>
+        </div>
+        <h3>System Monitor</h3>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Interval Time (seconds):</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="interval_time_sec"
+                       value="{{ config['SystemMonitor']['interval_time_sec'] }}" min="1">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ethernet Port:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="ethernetPort"
+                       value="{{ config['SystemMonitor']['ethernetPort'] }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Disk
+                <small class="text-muted">(e.g. /dev/sda1)</small>
+            </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="disk" value="{{ config['SystemMonitor']['disk'] }}">
+            </div>
+        </div>
+        <h3>MQTT</h3>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">MQTT Broker:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="MQTTBroker" value="{{ config['MQTT']['MQTTBroker'] }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">MQTT User:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="mqtt_user" value="{{ config['MQTT']['mqtt_user'] }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">MQTT Password:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="mqtt_password"
+                       value="{{ config['MQTT']['mqtt_password'] }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">MQTT Port:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="mqtt_port" value="{{ config['MQTT']['mqtt_port'] }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="sendDocker">sendDocker</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="sendDocker" value="True"
+                           {% if config['MQTT']['sendDocker'] %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="sendSystem">sendSystem</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="sendSystem" value="True"
+                           {% if config['MQTT']['sendSystem'] %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="sendAsMQTT">sendAsMQTT</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="sendAsMQTT" value="True"
+                           {% if config['MQTT']['sendAsMQTT'] %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary btn-save">Save</button>
+    </form>
+</div>
+</body>
+</html>
+
+
+

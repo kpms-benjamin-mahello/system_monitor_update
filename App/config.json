@@ -1,0 +1,21 @@
+{
+    "SYSTEM_INFO": {
+        "version": "0.0.1",
+        "BA": "KPMS",
+        "MASCHINE": "5248524"
+    },
+    "SystemMonitor": {
+        "interval_time_sec": 10,
+        "ethernetPort": "enp0s9",
+        "disk": "/dev/sda4"
+    },
+    "MQTT": {
+        "MQTTBroker": "Mosquitto",
+        "mqtt_user": "",
+        "mqtt_password": "",
+        "sendAsMQTT": true,
+        "sendSystem": true,
+        "sendDocker": false,
+        "mqtt_port": ""
+    }
+}
